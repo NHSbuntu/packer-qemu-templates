@@ -28,7 +28,7 @@
     ],
     "floppy_files": [
       "floppy/common/*",
-      "floppy/win7-enterprise-kvm/*",
+      "floppy/windows-7-enterprise-kvm/*",
       "scripts/dis-updates.ps1",
       "scripts/hotfix-KB3102810.bat",
       "scripts/microsoft-updates.bat",
