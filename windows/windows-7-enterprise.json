@@ -1,0 +1,77 @@
+{
+  "variables": {
+    "disk_size": "40000",
+    "password": "vagrant"
+  },
+
+  "builders": [{
+    "name": "{{user `os_name`}}",
+    "output_directory": "./output-{{user `os_name`}}-{{ user `image_name`}}/",
+    "vm_name": "{{user `os_name`}}-{{ user `image_name`}}",
+
+    "type": "qemu",
+    "format": "qcow2",
+    "accelerator": "kvm",
+
+    "disk_size": "{{ user `disk_size`}}",
+    "disk_interface": "virtio",
+
+    "iso_url": "{{user `iso_url`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_checksum": "{{user `iso_checksum`}}",
+
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "boot_wait": "2s",
+
+    "floppy_dirs": [
+      "floppy/drivers/virtio-win-0.1.135/viostor/w7/amd64",
+      "floppy/drivers/virtio-win-0.1.135/NetKVM/w7/amd64"
+    ],
+    "floppy_files": [
+      "floppy/common/*",
+      "floppy/windows-7-enterprise/*"
+    ],
+
+    "communicator": "winrm",
+
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "10000s",
+
+    "qemuargs": [
+      ["-m", "4048M"],
+      ["-cpu", "Westmere"],
+      ["-vga", "cirrus"]
+    ]
+  }],
+
+  "provisioners": [{
+      "type": "windows-shell",
+      "pause_before": "60m",
+      "scripts": [
+        "scripts/unlimited-password-expiration.bat",
+        "scripts/enable-rdp.bat",
+        "scripts/uac-disable.bat",
+        "scripts/disablewinupdate.bat",
+        "scripts/disable-hibernate.bat"
+      ]
+    },
+
+    {
+      "type": "windows-shell",
+      "inline": ["net user vagrant {{ user `password`}}"]
+    }
+  ],
+  "variables": {
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
+    "autounattend": "./floppy/windows-7-enterprise/Autounattend.xml",
+    "os_name": "windows-7-enterprise",
+    "headless": "true",
+    "source_path": "",
+    "image_name": "qemu-base",
+    "disk_size": "40000",
+    "password": "vagrant"
+  }
+}
