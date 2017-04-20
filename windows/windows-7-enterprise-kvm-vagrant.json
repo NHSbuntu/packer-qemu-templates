@@ -39,7 +39,7 @@
 
     "winrm_username": "vagrant",
     "winrm_password": "vagrant",
-    "winrm_timeout": "10000s",
+    "winrm_timeout": "5h",
 
     "qemuargs": [
       ["-m", "4048M"],

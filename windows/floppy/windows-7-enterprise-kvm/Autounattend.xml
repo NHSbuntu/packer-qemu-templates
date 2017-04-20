@@ -137,12 +137,12 @@
                   <Order>2</Order>
                   <RequiresUserInput>true</RequiresUserInput>
               </SynchronousCommand>
-              <SynchronousCommand wcm:action="add">
+              <!-- <SynchronousCommand wcm:action="add">
                   <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\hotfix-KB976932.ps1</CommandLine>
                   <Description>Install Windows 7 Service Pack 1</Description>
                   <Order>5</Order>
                   <RequiresUserInput>true</RequiresUserInput>
-              </SynchronousCommand>
+              </SynchronousCommand> -->
               <SynchronousCommand wcm:action="add">
                   <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\hotfix-KB3102810.ps1</CommandLine>
                   <Description>Install Windows 7 Hotfix KB3102810</Description>
@@ -161,12 +161,12 @@
                   <Order>8</Order>
                   <RequiresUserInput>true</RequiresUserInput>
               </SynchronousCommand>
-              <SynchronousCommand wcm:action="add">
+              <!-- <SynchronousCommand wcm:action="add">
                   <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\win-updates.ps1 -MaxUpdatesPerCycle 100 -RestartRequired 1</CommandLine>
                   <Description>Install Windows Updates</Description>
                   <Order>10</Order>
                   <RequiresUserInput>true</RequiresUserInput>
-              </SynchronousCommand>
+              </SynchronousCommand> -->
               <SynchronousCommand wcm:action="add">
                   <CommandLine>%SystemRoot%\System32\reg.exe ADD HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ /v HideFileExt /t REG_DWORD /d 0 /f</CommandLine>
                   <Order>15</Order>
@@ -201,6 +201,12 @@
                   <CommandLine>cmd.exe /c wmic useraccount where "name='vagrant'" set PasswordExpires=FALSE</CommandLine>
                   <Order>23</Order>
                   <Description>Disable password expiration for vagrant user</Description>
+              </SynchronousCommand>
+              <SynchronousCommand wcm:action="add">
+                  <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\win-updates.ps1 -MaxUpdatesPerCycle 50 -RestartRequired 1</CommandLine>
+                  <Description>Install Windows Updates</Description>
+                  <Order>90</Order>
+                  <RequiresUserInput>true</RequiresUserInput>
               </SynchronousCommand>
               <SynchronousCommand wcm:action="add">
                   <CommandLine>cmd.exe /c a:\configure.bat</CommandLine>
